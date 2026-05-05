@@ -1,13 +1,21 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+//Zdjecia
 import heroImg from './assets/logo.png'
 import headerImg from './assets/headerIMG.png'
 import personIcon from './assets/personIcon.png'
+//Ikony do bottom-navbar
+import IkonaKontakt from './icons/IkonaKontakt';
+import IkonaStronaGlowna from './icons/IkonaStronaGlowna';
+import IkonaStatystyki from './icons/IkonaStatystyki';
+import IkonaPerson from './icons/IkonaPerson';
+import IkonaTrening from './icons/IkonaTrening';
+//CSS
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  //Pobiera aktualny adres strony do .active
+  const aktualnyAdres = window.location.pathname;
 
   return (
     <>
@@ -25,7 +33,6 @@ function App() {
           </ul>
         </div>
       </nav>
-      {/*
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -48,94 +55,41 @@ function App() {
       <div className="ticks"></div>
 
       <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
+       
       </section>
-      */}
       <footer className='bottom-navbar'>
         <div className='nav-bottom-div'>
           <ul>
-            <li><a href='/dupa'>Statystyki</a></li>
-            <li><a href='/dddd'>Treningi</a></li>
-            <li><a href='/dddas'>Strona głowna</a></li>
-            <li><a href='/pomoc'>Kontakt</a></li>
-            <li><a href='/profil'>Profil</a></li>
+            <li>
+              <a href='/statystyki' className={`nav-link ${aktualnyAdres === '/statystyki' ? 'active' : ''}`}>
+              <IkonaStatystyki />
+              <span>Statystki</span>
+              </a>
+            </li>
+            <li>
+              <a href='/trening' className={`nav-link ${aktualnyAdres === '/trening' ? 'active' : ''}`}>
+                <IkonaTrening />
+                <span>Treningi</span>
+              </a>
+            </li>
+            <li>
+              <a href='/strona-glowna' className={`nav-link ${aktualnyAdres === '/strona-glowna' ? 'active' : ''}`}>
+                <IkonaStronaGlowna />
+                <span>Strona głowna</span>
+              </a>
+            </li>
+            <li>
+              <a href='/pomoc' className={`nav-link ${aktualnyAdres === '/pomoc' ? 'active' : ''}`}>
+                <IkonaKontakt />
+                <span>Kontakt</span>
+              </a>
+            </li>
+            <li>
+              <a href='/profil' className={`nav-link ${aktualnyAdres === '/profil' ? 'active' : ''}`}>
+                <IkonaPerson />
+                <span>Profil</span>
+              </a>
+            </li>
           </ul>
         </div>
       </footer>
