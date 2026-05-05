@@ -1,6 +1,6 @@
 import { useState } from 'react'
 //Zdjecia
-import heroImg from './assets/logo.png'
+
 import headerImg from './assets/headerIMG.png'
 import personIcon from './assets/personIcon.png'
 //Ikony do bottom-navbar
@@ -19,9 +19,9 @@ function App() {
 
   return (
     <>
-      <nav id="navbar">
+      <header className="navbar">
         <div className='left-right-header'>
-          <img src={headerImg} className="base2" width="75" height="100" alt="logo stony"/>
+          <img src={headerImg} className="base2" width="60" height="80" alt="logo stony"/>
           <p className="tekstHeader">WITRUALNY TRENER FITNESS</p>
         </div>
         <div className='left-right-header'>
@@ -32,17 +32,8 @@ function App() {
             <li>Zarejestruj sie</li>
           </ul>
         </div>
-      </nav>
+      </header>
       <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
         <button
           type="button"
           className="counter"
