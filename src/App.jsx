@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 //Zdjecia
 
 import headerImg from './assets/headerIMG.png'
@@ -17,6 +17,11 @@ function App() {
   //Pobiera aktualny adres strony do .active
   const aktualnyAdres = window.location.pathname;
 
+  useEffect(()=> {
+    if(window.location.pathname === '/'){
+      window.location.replace('/strona-glowna');
+    }
+  }, []);
   return (
     <>
       <header className="navbar">
