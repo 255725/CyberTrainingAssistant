@@ -1,19 +1,19 @@
-import { useState, useEffect} from 'react'
+import {useEffect} from 'react'
 //Zdjecia
 
 import headerImg from './assets/headerIMG.png'
 import personIcon from './assets/personIcon.png'
 //Ikony do bottom-navbar
-import IkonaKontakt from './icons/IkonaKontakt';
 import IkonaStronaGlowna from './icons/IkonaStronaGlowna';
 import IkonaStatystyki from './icons/IkonaStatystyki';
 import IkonaPerson from './icons/IkonaPerson';
-import IkonaTrening from './icons/IkonaTrening';
+//Formularz
+import FormularzRejestracji from './pages/FormularzRejestracji';
+import FormularzLogowania from './pages/FormularzLogowania';
 //CSS
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   //Pobiera aktualny adres strony do .active
   const aktualnyAdres = window.location.pathname;
 
@@ -22,6 +22,14 @@ function App() {
       window.location.replace('/strona-glowna');
     }
   }, []);
+
+  let stronaDoWyswietlenia;
+  if(aktualnyAdres==="/profil-rejestracja"){
+    stronaDoWyswietlenia=<FormularzRejestracji/>
+  }else if(aktualnyAdres==="/profil-logowanie"){
+    stronaDoWyswietlenia=<FormularzLogowania/>
+  }
+
   return (
     <>
       <header className="navbar">
@@ -33,26 +41,23 @@ function App() {
           <img className='personIcon'src={personIcon}/>
           ⌵
           <ul className='profilehamburger'>
-            <li>Zaloguj się</li>
-            <li>Zarejestruj sie</li>
+            <li>
+              <a href='/profil-logowanie'>
+                Zaloguj się
+              </a>
+            </li>
+            <li>
+              <a href='/profil-rejestracja'>
+                Zarejestruj sie
+              </a>    
+            </li>
           </ul>
         </div>
       </header>
-      <section id="center">
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+      {stronaDoWyswietlenia}
 
-      <section id="next-steps">
-       
-      </section>
+
       <footer className='bottom-navbar'>
         <div className='nav-bottom-div'>
           <ul>
@@ -63,25 +68,13 @@ function App() {
               </a>
             </li>
             <li>
-              <a href='/trening' className={`nav-link ${aktualnyAdres === '/trening' ? 'active' : ''}`}>
-                <IkonaTrening />
-                <span>Treningi</span>
-              </a>
-            </li>
-            <li>
               <a href='/strona-glowna' className={`nav-link ${aktualnyAdres === '/strona-glowna' ? 'active' : ''}`}>
                 <IkonaStronaGlowna />
                 <span>Strona głowna</span>
               </a>
             </li>
             <li>
-              <a href='/pomoc' className={`nav-link ${aktualnyAdres === '/pomoc' ? 'active' : ''}`}>
-                <IkonaKontakt />
-                <span>Kontakt</span>
-              </a>
-            </li>
-            <li>
-              <a href='/profil' className={`nav-link ${aktualnyAdres === '/profil' ? 'active' : ''}`}>
+              <a href='/profil-logowanie' className={`nav-link ${aktualnyAdres === '/profil-rejestracja' ? 'active' : ''}`}>
                 <IkonaPerson />
                 <span>Profil</span>
               </a>
