@@ -20,6 +20,8 @@ class User(Base):
     Age = Column(Integer)
     IDGender = Column(Integer, ForeignKey('Gender.GenderID'))
     IDAdvancement = Column(Integer, ForeignKey('Advancement.AdvancementID'))
+    Email = Column(String, unique=True)
+    Password = Column(String)
 
 class Exercise(Base):
     __tablename__ = 'Exercise'
