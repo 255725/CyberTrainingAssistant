@@ -74,7 +74,7 @@ function App() {
               </a>
             </li>
             <li>
-              <a href='/profil-logowanie' className={`nav-link ${aktualnyAdres === '/profil-rejestracja' ? 'active' : ''}`}>
+              <a href='/profil-logowanie' className={`nav-link ${aktualnyAdres === '/profil-rejestracja' || aktualnyAdres ==='/profil-logowanie' ? 'active' : ''}`}>
                 <IkonaPerson />
                 <span>Profil</span>
               </a>
