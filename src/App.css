@@ -166,7 +166,7 @@ a{
   transform: scale(1.5);
 }
 
-/*FORM*/
+/*FORMULARZ REJESTRACJI*/
 
 .forms{
   background-color: #DCDCDC;
@@ -273,6 +273,8 @@ a{
   margin-left: 5px;
 }
 
+
+/*FORMULARZ LOGOWANIA*/
 .p-inside-form{
   padding: 15px 15px 10px;
   font-size: 1rem;
@@ -285,4 +287,155 @@ a{
   color: darkblue;
   transition: all 0.3s ease;
   transform: translateY(-3px);
+}
+
+
+/*STRONA GŁÓWNA*/
+
+
+.welcome{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  color: black;
+  padding: 10px;
+}
+
+.welcome-text{
+  flex: 3;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+.welcome-ikon{
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+  padding: 30px;
+}
+
+.person-main-photo{
+  width: 300px;
+  height: 200px;
+  border-radius: 25px;
+}
+
+.main-p{
+  padding: 15px 15px 10px;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+}
+.button-class{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+
+.button-register{
+  background-color: darkblue;
+  color: whitesmoke;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+.button-register:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+  border-color: darkblue;
+  color: darkblue;
+  transition: all 0.3s ease;
+}
+
+.button-guest{
+  background-color: whitesmoke;
+  color: darkblue;
+  border-radius: 30px;
+  border-color: darkblue;
+
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+
+.button-guest:hover{
+  cursor: pointer;
+  background-color: darkblue;
+  border-color: whitesmoke;
+  color: whitesmoke;
+  transition: all 0.3s ease;
+}
+
+.card-look{
+  background-color: whitesmoke;
+  color: black;
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 25px;
+  border: 2px solid #DCDCDC;
+  padding: 25px 20px;
+
+  width: 350px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.card-look h3{
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+.card-look p{
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card-look img{
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.information-card{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+
+.information-privacy{
+  width: 95%;
+  max-width: 1090px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: black;
+  background-color: whitesmoke;
+
+  border: 2px solid #DCDCDC;
+  border-radius: 15px;
+
+  gap: 5px;
+  padding: 5px 10px;
+
+  margin: 0 auto 120px auto;
+}
+.information-privacy img{
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
 }

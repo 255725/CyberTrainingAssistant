@@ -1,17 +1,18 @@
 import {useEffect} from 'react'
 //Zdjecia
-
 import headerImg from './assets/headerIMG.png'
 import personIcon from './assets/personIcon.png'
 //Ikony do bottom-navbar
 import IkonaStronaGlowna from './icons/IkonaStronaGlowna';
 import IkonaStatystyki from './icons/IkonaStatystyki';
 import IkonaPerson from './icons/IkonaPerson';
-//Formularz
+//Formularze
 import FormularzRejestracji from './pages/FormularzRejestracji';
 import FormularzLogowania from './pages/FormularzLogowania';
 //CSS
 import './App.css'
+//Podstrony
+import StronaGlowna from './pages/StronaGlowna';
 
 function App() {
   //Pobiera aktualny adres strony do .active
@@ -28,6 +29,8 @@ function App() {
     stronaDoWyswietlenia=<FormularzRejestracji/>
   }else if(aktualnyAdres==="/profil-logowanie"){
     stronaDoWyswietlenia=<FormularzLogowania/>
+  }else if(aktualnyAdres==="/strona-glowna"){
+    stronaDoWyswietlenia=<StronaGlowna/>
   }
 
   return (

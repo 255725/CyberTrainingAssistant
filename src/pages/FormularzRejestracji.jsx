@@ -127,6 +127,10 @@ function FormularzRejestracji(){
                 </div>
 
                 <button>Zarejestruj się</button>
+                <p className='p-inside-form'>
+                    Masz już konto?
+                    <a href='/profil-logowanie'> Zaloguj się!</a>
+                </p>
             </form>
         </section>
     </>
