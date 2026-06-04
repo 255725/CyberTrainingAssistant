@@ -5,15 +5,22 @@ import mediapipe as mp
 
 
 AKTYWNY = False
+counter = 0
 
 def zatrzymaj_trening():
     global AKTYWNY
     AKTYWNY = False
 
+    wynik_koncowy = counter
+    counter = 0
+    return wynik_koncowy
+
 # Zmieniamy nazwę, aby odzwierciedlała, że funkcja teraz generuje strumień obrazu
 def generuj_obraz_biceps():
     global AKTYWNY
     AKTYWNY = True
+    counter = 0
+
     mp_pose = mp.solutions.pose
     mp_drawing = mp.solutions.drawing_utils
     pose_cam1 = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.7)

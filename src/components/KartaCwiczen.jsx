@@ -14,6 +14,30 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
                 method: 'POST'
             });
             console.log("Wysłano sygnał zatrzymania kamer.");
+
+            const daneTreningu = {
+                IDExercise: exerciseId,
+                RepCount: 15,
+                Weight: 0.0,
+                JumpHeight: 0.0
+            };
+            
+            const odpowiedzBazy = await fetch('http://localhost:8000/stats', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(daneTreningu)
+            });
+
+            const wynik = await odpowiedzBazy.json();
+
+            if (odpowiedzBazy.ok){
+                alert("Sukces: " + wynik.detail);
+            } else {
+                console.error("Błąd zapisu:", wynik.detail);
+            }
+            
         }catch (error){
             console.error("Błą podczas wyłączania kamer:", error)
         }

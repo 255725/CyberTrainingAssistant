@@ -25,9 +25,14 @@ def start_exercise(exercise_id: str):
     elif exercise_id == "3":
         return StreamingResponse(wyskok.generuj_obraz_wyskok(), media_type="multipart/x-mixed-replace; boundary=frame")
     
-@app.post("/api/stop-exercise")
-def stop_exercise():
-    biceps.zatrzymaj_trening()
-    barki.zatrzymaj_trening()
-    wyskok.zatrzymaj_trening()
+@app.post("/api/stop-exercise/{exercise_id}")
+def stop_exercise(exercise_id: int):
+    zdobyte_powtorzenia = 0
+    if exercise_id == 1:
+        zdobyte_powtorzenia = biceps.zatrzymaj_trening()
+    elif exercise_id == 2:
+        barki.zatrzymaj_trening()
+    elif exercise_id == 3:
+        wyskok.zatrzymaj_trening()
+
     return {"status": "success", "message": "Kamery wyłączone awaryjnie"}
