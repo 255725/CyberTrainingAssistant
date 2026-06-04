@@ -12,7 +12,7 @@ import FormularzLogowania from './pages/FormularzLogowania';
 //CSS
 import './App.css'
 //Podstrony
-//import StronaGlowna from './pages/StronaGlowna';
+import StronaGlowna from './pages/StronaGlowna';
 import Cwiczenia from './pages/Cwiczenia';
 
 function App() {
@@ -31,6 +31,8 @@ function App() {
   }else if(aktualnyAdres==="/profil-logowanie"){
     stronaDoWyswietlenia=<FormularzLogowania/>
   }else if(aktualnyAdres==="/strona-glowna"){
+    stronaDoWyswietlenia=<StronaGlowna/>
+  }else if(aktualnyAdres==="/cwiczenia-gosc"){
     stronaDoWyswietlenia=<Cwiczenia/>
   }
 

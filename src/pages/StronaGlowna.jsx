@@ -23,7 +23,11 @@ function StronaGlowna (){
                                 Załóż konto
                             </a>
                         </button>
-                        <button className='button-general-white'>Wypróbuj jako gość</button>
+                        <button className='button-general-white'>
+                            <a href='cwiczenia-gosc'>
+                                Wypróbuj jako gość
+                            </a>
+                        </button>
                     </div>
                 </div>
                 <div className='welcome-ikon'>

@@ -13,6 +13,7 @@ function Cwiczenia (){
                 describe='Stań stabilnie, trzymając hantle wzdłuż tułowia. 
                 Utrzymując lekkie zgięcie w łokciach, unieś ramiona na boki do wysokości 
                 barków. Powoli i pod pełną kontrolą opuść hantle do pozycji wyjściowej.'
+                exerciseId="2"
                 />
                 <ExerciseCard
                 icon={uginanieRamionZHantlami}
@@ -21,6 +22,7 @@ function Cwiczenia (){
                 Utrzymując łokcie nieruchomo blisko ciała, ugnij ramiona, 
                 unosząc hantle w kierunku barków. Powoli i pod pełną kontrolą 
                 opuść hantle do pozycji wyjściowej.'
+                exerciseId="1"
                 />
                 <ExerciseCard
                 icon={skokDosiezny}
@@ -29,6 +31,7 @@ function Cwiczenia (){
                 Wykonaj dynamiczny zamach ramionami w dół schodząc do półprzysiadu, 
                 a następnie wybij się mocno w górę, wyciągając ramię jak najwyżej. 
                 Wyląduj miękko na ugiętych kolanach, w pełni amortyzując skok.'
+                exerciseId="3"
                 />
             </div>
             <div style={{ height: '120px', width: '100%' }}></div>

@@ -490,3 +490,51 @@ a{
   margin-bottom: 30px;
   margin-top: 20px;
 }
+
+
+
+
+
+
+/*Obsluga kamery*/
+.fullscreen-video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999; /* Zapewnia, że jest nad wszystkim innym na stronie */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styl dla samego obrazu z kamer */
+.fullscreen-video-stream {
+    max-width: 90vw; /* Nie szersze niż 90% ekranu */
+    max-height: 85vh; /* Nie wyższe niż 85% ekranu */
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 195, 255, 0.4); /* Lekka poświata pasująca do stylu "Cyber" */
+}
+
+/* Wygląd przycisku do wyjścia */
+.close-video-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    padding: 12px 24px;
+    background-color: #ff3b30; /* Czerwony przycisk ostrzegawczy */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4);
+    transition: transform 0.2s;
+}
+
+.close-video-btn:hover {
+    transform: scale(1.05);
+}
