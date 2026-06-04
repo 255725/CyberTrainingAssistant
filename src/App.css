@@ -1,5 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
+/*GENERAL BUTTONS*/
+
+.button-general-blue{
+  background-color: darkblue;
+  color: whitesmoke;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+.button-general-blue:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+  border-color: darkblue;
+  color: darkblue;
+  transition: all 0.3s ease;
+}
+
+.button-general-white{
+  background-color: whitesmoke;
+  color: darkblue;
+  border-radius: 30px;
+  border-color: darkblue;
+
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+
+.button-general-white:hover{
+  cursor: pointer;
+  background-color: darkblue;
+  border-color: whitesmoke;
+  color: whitesmoke;
+  transition: all 0.3s ease;
+}
+
+
+
 /*HEADER*/
 .navbar{
   display: flex;
@@ -335,41 +374,8 @@ a{
 }
 
 
-.button-register{
-  background-color: darkblue;
-  color: whitesmoke;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 10px 55px;
-}
-.button-register:hover{
-  cursor: pointer;
-  background-color: whitesmoke;
-  border-color: darkblue;
-  color: darkblue;
-  transition: all 0.3s ease;
-}
 
-.button-guest{
-  background-color: whitesmoke;
-  color: darkblue;
-  border-radius: 30px;
-  border-color: darkblue;
-
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 10px 55px;
-}
-
-.button-guest:hover{
-  cursor: pointer;
-  background-color: darkblue;
-  border-color: whitesmoke;
-  color: whitesmoke;
-  transition: all 0.3s ease;
-}
-
+/*Wygląd karty na stronie głównej*/
 .card-look{
   background-color: whitesmoke;
   color: black;
@@ -404,7 +410,7 @@ a{
 .card-look img{
   width: 65px;
   height: 65px;
-  object-fit: contain;
+  object-fit: cover;
   margin-bottom: 15px;
 }
 
@@ -438,4 +444,49 @@ a{
   width: 65px;
   height: 65px;
   object-fit: contain;
+}
+
+
+
+
+
+/*Wyglad karty z ćwiczeniami*/
+.exercise-card-look{
+  background-color: whitesmoke;
+  color: black;
+  
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  border-radius: 25px;
+  border: 2px solid #DCDCDC;
+  padding: 25px 20px;
+
+  width: 350px;
+  height: 550px;
+  box-sizing: border-box;
+}
+
+.exercise-card-look img{
+  margin: 0;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.exercise-card-look button{
+  padding: 15px 15px;
+  margin-top: auto;
+}
+
+.excercise-card{
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }

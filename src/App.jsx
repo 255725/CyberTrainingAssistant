@@ -12,7 +12,8 @@ import FormularzLogowania from './pages/FormularzLogowania';
 //CSS
 import './App.css'
 //Podstrony
-import StronaGlowna from './pages/StronaGlowna';
+//import StronaGlowna from './pages/StronaGlowna';
+import Cwiczenia from './pages/Cwiczenia';
 
 function App() {
   //Pobiera aktualny adres strony do .active
@@ -30,7 +31,7 @@ function App() {
   }else if(aktualnyAdres==="/profil-logowanie"){
     stronaDoWyswietlenia=<FormularzLogowania/>
   }else if(aktualnyAdres==="/strona-glowna"){
-    stronaDoWyswietlenia=<StronaGlowna/>
+    stronaDoWyswietlenia=<Cwiczenia/>
   }
 
   return (
@@ -59,7 +60,6 @@ function App() {
       </header>
 
       {stronaDoWyswietlenia}
-
 
       <footer className='bottom-navbar'>
         <div className='nav-bottom-div'>

@@ -18,12 +18,12 @@ function StronaGlowna (){
                     </p>
                     <p>Wirtualny Trener, który koryguje twoją technike na żywo!</p>
                     <div className='button-class'>
-                        <button className='button-register'>
+                        <button className='button-general-blue'>
                             <a href='profil-rejestracja'>
                                 Załóż konto
                             </a>
                         </button>
-                        <button className='button-guest'>Wypróbuj jako gość</button>
+                        <button className='button-general-white'>Wypróbuj jako gość</button>
                     </div>
                 </div>
                 <div className='welcome-ikon'>
