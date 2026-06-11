@@ -10,10 +10,13 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
         setIsCameraActive(false);
 
         try{
-            await fetch('http://localhost:8000/api/stop-exercise', {
+            const stopResponse = await fetch(`http://localhost:8000/api/stop-exercise/${exerciseId}`, {
                 method: 'POST'
             });
-            console.log("Wysłano sygnał zatrzymania kamer.");
+            const stopData = await stopResponse.json();
+            console.log("Kamera wyłączona. Odebrane dane:", stopData);
+
+            const zdobytePowtorzenia = stopData.powtorzenia || 0;
 
             const daneTreningu = {
                 IDExercise: exerciseId,
@@ -22,10 +25,12 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
                 JumpHeight: 0.0
             };
             
+            
             const odpowiedzBazy = await fetch('http://localhost:8000/stats', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ${token}'
                 },
                 body: JSON.stringify(daneTreningu)
             });
@@ -33,7 +38,7 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
             const wynik = await odpowiedzBazy.json();
 
             if (odpowiedzBazy.ok){
-                alert("Sukces: " + wynik.detail);
+                alert('Świetna robota! Zapisano' + {zdobytePowtorzenia} + 'powtórzeń w bazie.');
             } else {
                 console.error("Błąd zapisu:", wynik.detail);
             }
@@ -65,9 +70,7 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
                         className="fullscreen-video-stream"
                     />
                 </div>
-            )
-
-            }
+            )}
         </>
     )
 }
