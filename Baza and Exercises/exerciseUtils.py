@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 import math
 import mediapipe as mp
-import voiceassistant
+import voiceAssistant
 
 
 def inicjalizuj_trening(komunikat_startowy="Rozpocznij cwiczenie"):
-    voiceassistant.flaga_koniec = False
-    voiceassistant.uruchom_asystenta()
-    voiceassistant.uruchom_nasluchiwanie()
+    voiceAssistant.flaga_koniec = False
+    voiceAssistant.uruchom_asystenta()
+    voiceAssistant.uruchom_nasluchiwanie()
 
     return 0, None, komunikat_startowy, komunikat_startowy, ""
 

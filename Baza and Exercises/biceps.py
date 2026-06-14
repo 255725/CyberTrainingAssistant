@@ -17,14 +17,14 @@ def generuj_obraz_biceps():
     AKTYWNY = True
     counter = 0
 
-    mp_pose, mp_drawing, pose_cam1, pose_cam2 = exercise_utils.setup_mediapipe()
-    _, stage, feedback, feedback_glosowy, poprzedni_feedback = exercise_utils.inicjalizuj_trening()
+    mp_pose, mp_drawing, pose_cam1, pose_cam2 = exerciseUtils.setup_mediapipe()
+    _, stage, feedback, feedback_glosowy, poprzedni_feedback = exerciseUtils.inicjalizuj_trening()
 
-    cap1, cap2, ma_kamere2 = exercise_utils.setup_cameras()
+    cap1, cap2, ma_kamere2 = exerciseUtils.setup_cameras()
 
     try:
         while AKTYWNY:
-            success1, img1, img2, active_results, active_h, active_w, ma_kamere2 = exercise_utils.pobierz_i_przetworz_obraz(
+            success1, img1, img2, active_results, active_h, active_w, ma_kamere2 = exerciseUtils.pobierz_i_przetworz_obraz(
                 cap1, cap2, ma_kamere2, pose_cam1, pose_cam2, mp_drawing, mp_pose
             )
 
@@ -33,7 +33,7 @@ def generuj_obraz_biceps():
 
             if active_results and active_results.pose_landmarks:
                 landmarks = active_results.pose_landmarks.landmark
-                angle = exercise_utils.pobierz_kat_i_rysuj(
+                angle = exerciseUtils.pobierz_kat_i_rysuj(
                     img1, landmarks,
                     mp_pose.PoseLandmark.RIGHT_SHOULDER,
                     mp_pose.PoseLandmark.RIGHT_ELBOW,
@@ -74,7 +74,7 @@ def generuj_obraz_biceps():
                         voiceAssistant.wiadomosci_do_przeczytania.put(feedback_glosowy)
                     poprzedni_feedback = feedback_glosowy
 
-            combined_img = exercise_utils.combine_and_draw_ui(img1, img2, ma_kamere2, counter, feedback)
+            combined_img = exerciseUtils.combine_and_draw_ui(img1, img2, ma_kamere2, counter, feedback)
 
             if voiceAssistant.flaga_koniec:
                 voiceAssistant.powiedz_to(f"Zakończono trening. Liczba powtórzeń: {counter}")
