@@ -1,110 +1,97 @@
 import cv2
-import math
-import numpy as np
-import mediapipe as mp
+import voiceAssistant
+import exerciseUtils
 
 AKTYWNY = False
+counter = 0
 
 def zatrzymaj_trening():
-    global AKTYWNY
+    global AKTYWNY, counter
     AKTYWNY = False
+    wynik_koncowy = counter
+    counter = 0
+    return wynik_koncowy
 
 def generuj_obraz_barki():
-    global AKTYWNY
+    global AKTYWNY, counter
     AKTYWNY = True
-    mp_pose = mp.solutions.pose
-    mp_drawing = mp.solutions.drawing_utils
-    pose_cam1 = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.7)
-    pose_cam2 = mp_pose.Pose(min_detection_confidence=0.7, min_tracking_confidence=0.7)
-
-    def calculate_angle(a, b, c):
-        a = np.array(a)
-        b = np.array(b)
-        c = np.array(c)
-        radians = math.atan2(c[1] - b[1], c[0] - b[0]) - math.atan2(a[1] - b[1], a[0] - b[0])
-        angle = np.abs(radians * 180.0 / np.pi)
-        if angle > 180.0:
-            angle = 360 - angle
-        return angle
-
     counter = 0
-    stage = None
-    feedback = "Rozpocznij cwiczenie"
 
-    cap1 = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-    cap2 = cv2.VideoCapture(1, cv2.CAP_DSHOW)
+    mp_pose, mp_drawing, pose_cam1, pose_cam2 = exerciseUtils.setup_mediapipe()
+    _, stage, feedback, feedback_glosowy, poprzedni_feedback = exerciseUtils.inicjalizuj_trening()
 
-    for cap in [cap1, cap2]:
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap1, cap2, ma_kamere2 = exerciseUtils.setup_cameras()
+
     try:
         while AKTYWNY:
-            success1, img1 = cap1.read()
-            success2, img2 = cap2.read()
+            success1, img1, img2, active_results, active_h, active_w, ma_kamere2 = exerciseUtils.pobierz_i_przetworz_obraz(
+                cap1, cap2, ma_kamere2, pose_cam1, pose_cam2, mp_drawing, mp_pose
+            )
 
-            if not success1 or not success2:
-                print("Blad pobierania obrazu!")
+            if not success1:
                 break
-
-            imgRGB1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
-            results1 = pose_cam1.process(imgRGB1)
-            imgRGB2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
-            results2 = pose_cam2.process(imgRGB2)
-
-            active_results = results1
-            active_h, active_w, _ = img1.shape
-
-            if results1.pose_landmarks:
-                mp_drawing.draw_landmarks(img1, results1.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-            if results2.pose_landmarks:
-                mp_drawing.draw_landmarks(img2, results2.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
             if active_results and active_results.pose_landmarks:
                 landmarks = active_results.pose_landmarks.landmark
-                hip = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
-                shoulder = [landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
-                            landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
-                elbow = [landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].x,
-                        landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
-                angle = calculate_angle(hip, shoulder, elbow)
-
-                shoulder_pixel = (int(shoulder[0] * active_w), int(shoulder[1] * active_h))
-                cv2.putText(img1, f"{int(angle)} deg", shoulder_pixel, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2,
-                            cv2.LINE_AA)
+                angle = exerciseUtils.pobierz_kat_i_rysuj(
+                    img1, landmarks,
+                    mp_pose.PoseLandmark.RIGHT_HIP,
+                    mp_pose.PoseLandmark.RIGHT_SHOULDER,
+                    mp_pose.PoseLandmark.RIGHT_ELBOW,
+                    active_w, active_h
+                )
 
                 if angle < 25:
+                    if stage == "lifting":
+                        feedback = "Ruch byl zbyt plytki!"
+                        feedback_glosowy = "Popraw technike"
+                    elif stage == "lowering":
+                        feedback = "Dobry opust. Unies rece w bok."
+                        feedback_glosowy = "Dobrze"
                     stage = "down"
-                    feedback = "Dobry opust. Unies rece w bok."
-                if angle > 80 and stage == "down":
-                    stage = "up"
-                    counter += 1
-                    feedback = "Idealna wysokosc! Opusc powoli."
-                if angle > 45 and angle < 75 and stage == "up":
-                    feedback = "Unies rece nieco wyzej!"
 
-            combined_img = np.hstack((img1, img2))
-            comb_h, comb_w, _ = combined_img.shape
+                if angle > 40 and stage == "down":
+                    stage = "lifting"
+                    feedback_glosowy = ""
 
-            cv2.rectangle(combined_img, (0, 0), (comb_w, 100), (0, 0, 0), -1)
-            cv2.putText(combined_img, f"POWTORZENIA: {counter}", (25, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3,
-                        cv2.LINE_AA)
-            cv2.putText(combined_img, f"TRENER: {feedback}", (550, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2,
-                        cv2.LINE_AA)
+                if angle > 80:
+                    if stage == "lifting":
+                        stage = "up"
+                        counter += 1
+                        feedback = "Idealna wysokosc! Opusc powoli."
+                        feedback_glosowy = str(counter)
+                    elif stage == "lowering":
+                        stage = "up"
+                        feedback = "Brak pelnego opustu!"
+                        feedback_glosowy = "Popraw technike"
 
-             # --- SEKCJA STRUMIENIOWANIA MJPEG ---
-            # Kompresja połączonego obrazu do formatu JPG
+                if angle < 60 and stage == "up":
+                    stage = "lowering"
+                    feedback_glosowy = ""
+
+                if feedback_glosowy != poprzedni_feedback:
+                    if feedback_glosowy != "":
+                        voiceAssistant.wiadomosci_do_przeczytania.put(feedback_glosowy)
+                    poprzedni_feedback = feedback_glosowy
+
+            combined_img = exerciseUtils.combine_and_draw_ui(img1, img2, ma_kamere2, counter, feedback)
+
+            if voiceAssistant.flaga_koniec:
+                voiceAssistant.powiedz_to(f"Zakończono trening. Liczba powtórzeń: {counter}")
+                break
+
             ret, buffer = cv2.imencode('.jpg', combined_img)
             if not ret:
                 continue
-            
-            # Konwersja na bajty
+
             frame_bytes = buffer.tobytes()
 
-            # "Wyrzucenie" klatki do serwera FastAPI
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
 
     finally:
         cap1.release()
-        cap2.release()
+        if ma_kamere2:
+            cap2.release()
+        voiceAssistant.wiadomosci_do_przeczytania.put("STOP")
         AKTYWNY = False
