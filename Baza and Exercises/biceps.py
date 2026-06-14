@@ -1,6 +1,6 @@
 import cv2
-import voiceassistant
-import exercise_utils
+import voiceAssistant
+import exerciseUtils
 
 AKTYWNY = False
 counter = 0
@@ -71,13 +71,13 @@ def generuj_obraz_biceps():
 
                 if feedback_glosowy != poprzedni_feedback:
                     if feedback_glosowy != "":
-                        voiceassistant.wiadomosci_do_przeczytania.put(feedback_glosowy)
+                        voiceAssistant.wiadomosci_do_przeczytania.put(feedback_glosowy)
                     poprzedni_feedback = feedback_glosowy
 
             combined_img = exercise_utils.combine_and_draw_ui(img1, img2, ma_kamere2, counter, feedback)
 
-            if voiceassistant.flaga_koniec:
-                voiceassistant.powiedz_to(f"Zakończono trening. Liczba powtórzeń: {counter}")
+            if voiceAssistant.flaga_koniec:
+                voiceAssistant.powiedz_to(f"Zakończono trening. Liczba powtórzeń: {counter}")
                 break
 
             ret, buffer = cv2.imencode('.jpg', combined_img)
@@ -93,5 +93,5 @@ def generuj_obraz_biceps():
         cap1.release()
         if ma_kamere2:
             cap2.release()
-        voiceassistant.wiadomosci_do_przeczytania.put("STOP")
+        voiceAssistant.wiadomosci_do_przeczytania.put("STOP")
         AKTYWNY = False
