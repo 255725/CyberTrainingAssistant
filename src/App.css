@@ -1,0 +1,540 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/*GENERAL BUTTONS*/
+
+.button-general-blue{
+  background-color: darkblue;
+  color: whitesmoke;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+.button-general-blue:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+  border-color: darkblue;
+  color: darkblue;
+  transition: all 0.3s ease;
+}
+
+.button-general-white{
+  background-color: whitesmoke;
+  color: darkblue;
+  border-radius: 30px;
+  border-color: darkblue;
+
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+
+.button-general-white:hover{
+  cursor: pointer;
+  background-color: darkblue;
+  border-color: whitesmoke;
+  color: whitesmoke;
+  transition: all 0.3s ease;
+}
+
+
+
+/*HEADER*/
+.navbar{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  background-color: whitesmoke;;
+  opacity: 75%;
+  padding: 5px 15px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.tekstHeader{
+  text-align: left;
+  color: darkblue;
+  font-size: 25px;
+  font-weight: 600;
+  width: 250px;
+  letter-spacing: 0.5px;
+  font-family:'Open Sans', sans-serif;
+}
+
+.left-right-header{
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: default;
+  height: 100%;
+}
+
+.profilehamburger{
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  background-color: whitesmoke;
+  list-style-type: none;
+  margin: 0;
+  padding: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.left-right-header:hover .profilehamburger{
+  display: block;
+  cursor: pointer;
+}
+
+.profilehamburger li{
+  padding: 20px 30px;
+  white-space: nowrap;
+  align-items: center;
+  display: flex;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.profilehamburger a:hover{
+  color: darkblue;
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.personIcon{
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+}
+
+/*CENTER*/
+.center{
+  background-color: white;
+}
+
+
+
+
+
+/*FOOTER*/
+.bottom-navbar{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  background-color: #696969;
+  opacity: 90%;
+  
+}
+.nav-bottom-div ul{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;;
+}
+.nav-bottom-div li{
+  flex: 1;
+}
+.nav-bottom-div a{
+  color: whitesmoke;
+  border-radius: 25px;
+  padding: 8px 10px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+
+}
+
+.nav-link{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+
+  padding: 10px 15px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
+
+}
+
+.nav-link.active,
+.nav-link:hover{
+  color: darkblue;
+  background-color: #696969;
+  transform: translateY(-3px);
+}
+.nav-icon{
+  height: 30px;
+  width: 30px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  transition: all 0.3s ease;
+}
+.nav-icon-hantel{
+  transform: scale(2.2);
+  margin-top: 0px;
+}
+.nav-icon-main{
+  transform: scale(1.8);
+}
+.nav-icon-person{
+  transform: scale(1.5);
+}
+
+/*FORMULARZ REJESTRACJI*/
+
+.forms{
+  background-color: #DCDCDC;
+  opacity: 90%;
+  visibility: 70%;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 120px;
+}
+
+.forms form {
+  display: flex;
+  flex-direction: column;
+}
+
+.forms label ,
+.radio-label{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: black;
+}
+
+.forms input {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+}
+
+
+.forms button {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #DCDCDC;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 25px;
+  border-style: solid;
+}
+.forms button:hover{
+  color: darkblue;
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+.generalFontP{
+  font-size: 45px;
+  font-weight: 600;
+  color: black;
+  margin: 10px;
+}
+
+/*TYPE-RADIO*/
+
+.forms input[type="radio"] {
+  width: auto;
+  padding: 0;
+  margin: 0 10px 0 0;
+  cursor: pointer;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 25px; 
+  align-items: flex-start; 
+  margin: 5px auto 10px auto;     
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 400;
+  margin: 0;
+  cursor: pointer;
+}
+
+.radio-option {
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+}
+
+
+/*OBSLUGA FORMULARZY (REGEX)*/
+
+.error-text{
+  color: red;
+  font-size: 0.8rem;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+
+/*FORMULARZ LOGOWANIA*/
+.p-inside-form{
+  padding: 15px 15px 10px;
+  font-size: 1rem;
+  color: black;
+  font-weight: bold;
+}
+
+.p-inside-form :hover{
+  cursor: pointer;
+  color: darkblue;
+  transition: all 0.3s ease;
+  transform: translateY(-3px);
+}
+
+
+/*STRONA GŁÓWNA*/
+
+
+.welcome{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  color: black;
+  padding: 10px;
+}
+
+.welcome-text{
+  flex: 3;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+.welcome-ikon{
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+  padding: 30px;
+}
+
+.person-main-photo{
+  width: 300px;
+  height: 200px;
+  border-radius: 25px;
+}
+
+.main-p{
+  padding: 15px 15px 10px;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+}
+.button-class{
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+
+
+/*Wygląd karty na stronie głównej*/
+.card-look{
+  background-color: whitesmoke;
+  color: black;
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 25px;
+  border: 2px solid #DCDCDC;
+  padding: 25px 20px;
+
+  width: 350px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.card-look h3{
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+.card-look p{
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card-look img{
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.information-card{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+
+.information-privacy{
+  width: 95%;
+  max-width: 1090px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: black;
+  background-color: whitesmoke;
+
+  border: 2px solid #DCDCDC;
+  border-radius: 15px;
+
+  gap: 5px;
+  padding: 5px 10px;
+
+  margin: 0 auto 120px auto;
+}
+.information-privacy img{
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+
+
+
+
+
+/*Wyglad karty z ćwiczeniami*/
+.exercise-card-look{
+  background-color: whitesmoke;
+  color: black;
+  
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  border-radius: 25px;
+  border: 2px solid #DCDCDC;
+  padding: 25px 20px;
+
+  width: 350px;
+  height: 550px;
+  box-sizing: border-box;
+}
+
+.exercise-card-look img{
+  margin: 0;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.exercise-card-look button{
+  padding: 15px 15px;
+  margin-top: auto;
+}
+
+.excercise-card{
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+
+
+
+
+
+/*Obsluga kamery*/
+.fullscreen-video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999; /* Zapewnia, że jest nad wszystkim innym na stronie */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styl dla samego obrazu z kamer */
+.fullscreen-video-stream {
+    max-width: 90vw; /* Nie szersze niż 90% ekranu */
+    max-height: 85vh; /* Nie wyższe niż 85% ekranu */
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 195, 255, 0.4); /* Lekka poświata pasująca do stylu "Cyber" */
+}
+
+/* Wygląd przycisku do wyjścia */
+.close-video-btn {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    padding: 12px 24px;
+    background-color: #ff3b30; /* Czerwony przycisk ostrzegawczy */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4);
+    transition: transform 0.2s;
+}
+
+.close-video-btn:hover {
+    transform: scale(1.05);
+}

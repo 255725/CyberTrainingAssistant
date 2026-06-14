@@ -5,14 +5,12 @@ import exerciseUtils
 AKTYWNY = False
 counter = 0
 
-
 def zatrzymaj_trening():
     global AKTYWNY, counter
     AKTYWNY = False
     wynik_koncowy = counter
     counter = 0
     return wynik_koncowy
-
 
 def generuj_obraz_barki():
     global AKTYWNY, counter
