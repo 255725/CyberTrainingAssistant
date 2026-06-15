@@ -118,6 +118,18 @@ a{
   cursor: pointer;
 }
 
+.user-greeting {
+  padding: 5px 5px;
+  color: darkblue; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+}
+
+.logout-link {
+  color: #ff4d4d;
+}
+
 /*CENTER*/
 .center{
   background-color: white;
