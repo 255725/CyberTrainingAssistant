@@ -1,74 +1,60 @@
-import subprocess
-import os
-import pygame
+import pyttsx3
+import queue
+import threading
 import speech_recognition as sr
-from pathlib import Path
+
+wiadomosci_do_przeczytania = queue.Queue()
+flaga_koniec = False
 
 
-BASE_DIR = Path(__file__).resolve().parent
-# Tu wpisz ścieżkę do folderu, gdzie masz plik piper.exe
-PIPER_EXE = BASE_DIR / "piper" / "piper.exe"
-# Tu wpisz ścieżkę do pliku .onnx (głos bass-high)
-MODEL_PATH = BASE_DIR / "piper" / "pl_PL-bass-high.onnx"
-OUTPUT_FILE = BASE_DIR / "trener_mowa.wav"
-
-
-def mow(tekst):
-    print(f"Trener mówi: {tekst}")
-
-    # 1. Budujemy komendę (używamy cudzysłowów dla ścieżek ze spacjami)
-    # Echo przesyła tekst do Pipera, który tworzy plik .wav
-    command = f'echo {tekst} | "{PIPER_EXE}" --model "{MODEL_PATH}" --output_file "{OUTPUT_FILE}"'
-
+def powiedz_to(tekst):
     try:
-        # Wykonujemy generowanie mowy
-        subprocess.run(command, shell=True, check=True, capture_output=True)
+        import pythoncom
+        pythoncom.CoInitialize()
+    except ImportError:
+        pass
 
-        # 2. Odtwarzanie audio
-        pygame.mixer.init()
-        pygame.mixer.music.load(str(OUTPUT_FILE))
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            pygame.time.Clock().tick(10)
-        pygame.mixer.quit()
-
-    except Exception as e:
-        print(f"Błąd generowania mowy: {e}")
-        print("PRÓBA AWARYJNA: Używam głosu systemowego Windows...")
-        import pyttsx3
-        alt_engine = pyttsx3.init()
-        alt_engine.say(tekst)
-        alt_engine.runAndWait()
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 180)
+    engine.say(str(tekst))
+    engine.runAndWait()
 
 
-def sluchaj():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("\n[TRENER SŁUCHA...]")
-        r.adjust_for_ambient_noise(source, duration=0.5)
-        try:
-            audio = r.listen(source, timeout=5)
-            tekst = r.recognize_google(audio, language="pl-PL")
-            return tekst.lower()
-        except:
-            return ""
-
-
-# --- START PROGRAMU ---
-if __name__ == "__main__":
-    mow("Witaj! Jestem twoim darmowym trenerem. Powiedz start, żeby zacząć, lub koniec, żeby wyłączyć.")
-
+def odtwarzacz_glosu():
     while True:
-        komenda = sluchaj()
-        if komenda:
-            print(f"Usłyszałem: {komenda}")
+        tekst = wiadomosci_do_przeczytania.get()
+        if tekst == "STOP":
+            break
 
-            if any(slowo in komenda for slowo in ["koniec", "stop", "wyłącz"]):
-                mow("Dobra, kończymy na dzisiaj. Kawał dobrej roboty!")
-                break
+        print(f">>> ASYSTENT: {tekst}")
 
-            elif "pompki" in komenda:
-                mow("Jasne! Kładź się i robimy pompki. Raz, dwa, trzy! Dawaj dalej!")
+        watek = threading.Thread(target=powiedz_to, args=(tekst,), daemon=True)
+        watek.start()
+        watek.join()
 
-            elif "przerwa" in komenda:
-                mow("Odpocznij chwilę, ale nie siadaj. Głębokie wdechy!")
+
+def uruchom_asystenta():
+    watek_glosowy = threading.Thread(target=odtwarzacz_glosu, daemon=True)
+    watek_glosowy.start()
+    return watek_glosowy
+
+
+def callback_nasluchu(recognizer, audio):
+    global flaga_koniec
+    try:
+        tekst = recognizer.recognize_google(audio, language="pl-PL").lower()
+        print(f">>> USŁYSZANO: {tekst}")
+        if "koniec" in tekst:
+            flaga_koniec = True
+    except sr.UnknownValueError:
+        pass
+    except sr.RequestError:
+        pass
+
+
+def uruchom_nasluchiwanie():
+    r = sr.Recognizer()
+    m = sr.Microphone()
+    with m as source:
+        r.adjust_for_ambient_noise(source)
+    r.listen_in_background(m, callback_nasluchu)
