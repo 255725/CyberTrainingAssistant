@@ -1,5 +1,6 @@
 import { useState } from "react";
 import personIcon from '../assets/personIcon.png';
+import '../App.css'
 
 function MenuUzytownika(){
     const [zalogowany, setZalogowany] = useState(() => !!localStorage.getItem('token'));
@@ -24,7 +25,7 @@ function MenuUzytownika(){
                 {zalogowany ? (
                     <>
                         <li className="user-greeting">
-                            Witaj, <strong>{nazwaUzytkownika}</strong>!
+                            Witaj, {nazwaUzytkownika}!
                         </li>
                         <li>
                             <a href="/statystyki">Twoje statystyki</a>

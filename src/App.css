@@ -92,7 +92,7 @@
 }
 
 .profilehamburger li{
-  padding: 20px 30px;
+  padding: 15px 30px;
   white-space: nowrap;
   align-items: center;
   display: flex;
@@ -124,6 +124,7 @@ a{
   display: flex; 
   align-items: center; 
   gap: 10px;
+  font-weight: 600;
 }
 
 .logout-link {
@@ -378,6 +379,11 @@ a{
   font-size: 2rem;
   color: black;
   font-weight: bold;
+}
+.welcome-name {
+  display: block;  
+  margin-bottom: 10px; 
+  font-weight: bold;  
 }
 .button-class{
   display: flex;

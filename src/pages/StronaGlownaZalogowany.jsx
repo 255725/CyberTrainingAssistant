@@ -8,24 +8,22 @@ import progressIcon from '../assets/main-page/progressIcon.png'
 import skeletonIcon from '../assets/main-page/skeletonIcon.png'
 import privacyIcon from '../assets/main-page/privacyIcon.png'
 
-function StronaGlowna (){
+function StronaGlownaZalogowany (){
+
+    const nazwa_uzytkownika = localStorage.getItem('user_nickname');
     return(
         <>
             <section className='welcome'>
                 <div className='welcome-text'>
                     <p className='main-p'>
-                        Osiągnij swoją wymarzoną sylwetkę!
+                        <span className='welcome-name'>Cześć {nazwa_uzytkownika}!</span> 
+                        Osiągnij z nami swoją wymarzoną sylwetkę!
                     </p>
                     <p>Wirtualny Trener, który koryguje twoją technike na żywo!</p>
                     <div className='button-class'>
                         <button className='button-general-blue'>
-                            <a href='profil-rejestracja'>
-                                Załóż konto
-                            </a>
-                        </button>
-                        <button className='button-general-white'>
-                            <a href='cwiczenia'>
-                                Wypróbuj jako gość
+                            <a href='/cwiczenia'>
+                                Przejdź do ćwiczeń
                             </a>
                         </button>
                     </div>
@@ -66,4 +64,4 @@ function StronaGlowna (){
         </>
 
     )
-}export default StronaGlowna;
+}export default StronaGlownaZalogowany;

@@ -14,6 +14,7 @@ import MenuUzytownika from './components/MenuUzytkownika';
 import './App.css'
 //Podstrony
 import StronaGlowna from './pages/StronaGlowna';
+import StronaGlownaZalogowany from './pages/StronaGlownaZalogowany';
 import Cwiczenia from './pages/Cwiczenia';
 
 function App() {
@@ -22,9 +23,11 @@ function App() {
 
   useEffect(()=> {
     if(window.location.pathname === '/'){
-      window.location.replace('/strona-glowna');
+      window.location.replace('/strona-glowna-pl');
     }
   }, []);
+
+  const czyZalogowany = !!localStorage.getItem('token');
 
   let stronaDoWyswietlenia;
   if(aktualnyAdres==="/profil-rejestracja"){
@@ -32,8 +35,8 @@ function App() {
   }else if(aktualnyAdres==="/profil-logowanie"){
     stronaDoWyswietlenia=<FormularzLogowania/>
   }else if(aktualnyAdres==="/strona-glowna"){
-    stronaDoWyswietlenia=<StronaGlowna/>
-  }else if(aktualnyAdres==="/cwiczenia-gosc"){
+    stronaDoWyswietlenia = czyZalogowany ? <StronaGlownaZalogowany /> : <StronaGlowna />;
+  }else if(aktualnyAdres==="/cwiczenia"){
     stronaDoWyswietlenia=<Cwiczenia/>
   }
 
