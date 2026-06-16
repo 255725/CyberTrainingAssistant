@@ -16,6 +16,7 @@ import './App.css'
 import StronaGlowna from './pages/StronaGlowna';
 import StronaGlownaZalogowany from './pages/StronaGlownaZalogowany';
 import Cwiczenia from './pages/Cwiczenia';
+import StatystykiUzytkownika from './pages/StatystykiUzytkownika';
 
 function App() {
   //Pobiera aktualny adres strony do .active
@@ -23,7 +24,7 @@ function App() {
 
   useEffect(()=> {
     if(window.location.pathname === '/'){
-      window.location.replace('/strona-glowna-pl');
+      window.location.replace('/strona-glowna');
     }
   }, []);
 
@@ -38,6 +39,8 @@ function App() {
     stronaDoWyswietlenia = czyZalogowany ? <StronaGlownaZalogowany /> : <StronaGlowna />;
   }else if(aktualnyAdres==="/cwiczenia"){
     stronaDoWyswietlenia=<Cwiczenia/>
+  }else if(aktualnyAdres==="/statystyki"){
+    stronaDoWyswietlenia=<StatystykiUzytkownika />
   }
 
   return (

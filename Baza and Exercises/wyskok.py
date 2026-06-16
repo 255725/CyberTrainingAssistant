@@ -5,7 +5,7 @@ import exerciseUtils
 
 AKTYWNY = False
 counter = 0
-
+ostatnia_wysokosc = 0.0
 def zatrzymaj_trening():
     global AKTYWNY, counter
     AKTYWNY = False
@@ -94,6 +94,7 @@ def generuj_obraz_wyskok():
                             stage = "standing"
                             counter += 1
                             last_jump_height = max_flight_y * cm_per_pixel
+                            ostatnia_wysokosc= last_jump_height
                             feedback = "Swietne ladowanie! Skacz znowu."
                             feedback_glosowy = f"{int(last_jump_height)} centymetrow"
                             max_flight_y = 0

@@ -37,3 +37,9 @@ class ExerciseResponse(BaseModel):
     ExerciseName: str
     class Config:
         from_attributes = True
+
+class StatsCreate(BaseModel):
+    IDExercise: int
+    RepCount: int
+    Weight: float = None
+    JumpHeight: float = None

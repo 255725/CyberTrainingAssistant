@@ -556,3 +556,18 @@ a{
 .close-video-btn:hover {
     transform: scale(1.05);
 }
+
+
+
+/*STRONA STATYSTYKI*/
+.statistic-text{
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: black;
+  gap: 10px;
+}

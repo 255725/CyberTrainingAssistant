@@ -154,6 +154,25 @@ def get_my_history(
     results = db.query(Stats).filter(Stats.IDUser == current_user.UserID).all()
     return results
 
+@app.post("/api/save-stats")
+def save_workout_results(
+    stats_data: data.StatsCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    new_stat = Stats(
+        IDUser=current_user.UserID,
+        IDExercise=stats_data.IDExercise,
+        RepCount=stats_data.RepCount,
+        Weight=stats_data.Weight,
+        JumpHeight=stats_data.JumpHeight
+    )
+
+    db.add(new_stat)
+    db.commit()
+    db.refresh(new_stat)
+
+    return{"status": "success", "detail": "Wynik zapisany pomyślnie"}
 
 # --- ENDPOINTY KAMER (MediaPipe) ---
 @app.get("/api/video-stream/{exercise_id}")
@@ -167,15 +186,25 @@ def start_exercise(exercise_id: str):
     
 @app.post("/api/stop-exercise/{exercise_id}")
 def stop_exercise(exercise_id: int):
-    zdobyte_powtorzenia = 0
+    # Domyślne wartości
+    wynik_powtorzenia = 0
+    wynik_dodatkowy = 0.0 # Będzie to jumpHeight dla skoków
     
-    # Przypisujemy wyniki z funkcji zatrzymujących do zmiennej
     if exercise_id == 1:
-        zdobyte_powtorzenia = biceps.zatrzymaj_trening()
+        wynik_powtorzenia = biceps.zatrzymaj_trening()
+        
     elif exercise_id == 2:
-        zdobyte_powtorzenia = barki.zatrzymaj_trening()
+        wynik_powtorzenia = barki.zatrzymaj_trening()
+        
     elif exercise_id == 3:
-        zdobyte_powtorzenia = wyskok.zatrzymaj_trening()
+        # Teraz tutaj odbieramy słownik z wyskok.py
+        dane_wyskok = wyskok.zatrzymaj_trening() 
+        wynik_powtorzenia = dane_wyskok["powtorzenia"]
+        wynik_dodatkowy = dane_wyskok["jumpHeight"]
 
-    # Zwracamy jsona z policzonymi powtórzeniami, tak aby React mógł je odczytać
-    return {"status": "success", "powtorzenia": zdobyte_powtorzenia}
+    # Zwracamy spójny obiekt JSON, który łatwo odczytasz w React
+    return {
+        "status": "success", 
+        "powtorzenia": wynik_powtorzenia, 
+        "jumpHeight": wynik_dodatkowy
+    }
