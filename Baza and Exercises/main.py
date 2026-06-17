@@ -73,20 +73,32 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    print(f"\n--- DEBUG: Otrzymany token: {token[:20]}... ---")
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("sub")
-        if user_id is None:
+        # Używamy krotki ("HS256",)
+        payload = jwt.decode(token, SECRET_KEY, algorithms=("HS256",))
+        print(f"--- DEBUG: Zdekodowany payload: {payload} ---")
+        
+        user_id_str = payload.get("sub")
+        if user_id_str is None:
+            print("--- DEBUG: BŁĄD - Brak pola 'sub' w tokenie! ---")
             raise HTTPException(status_code=401, detail="Nieprawidłowy token")
+            
+        user_id = int(user_id_str)
+        
     except jwt.ExpiredSignatureError:
+        print("--- DEBUG: BŁĄD - Token wygasł! ---")
         raise HTTPException(status_code=401, detail="Sesja wygasła, zaloguj się ponownie")
-    except jwt.PyJWTError:
+    except jwt.PyJWTError as e:
+        print(f"--- DEBUG: BŁĄD DEKODOWANIA JWT: {e} ---")
         raise HTTPException(status_code=401, detail="Błąd autoryzacji tokena")
     
     user = db.query(User).filter(User.UserID == user_id).first()
     if user is None:
+        print(f"--- DEBUG: BŁĄD - Nie znaleziono w bazie użytkownika o ID {user_id} ---")
         raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
     
+    print(f"--- DEBUG: Autoryzacja udana! Użytkownik: {user.Nickname} ---")
     return user
 
 
@@ -116,7 +128,7 @@ def login(login_data: data.LoginRequest, db: Session = Depends(get_db)):
     if not user or not verify_password(login_data.Password, user.Password):
         raise HTTPException(status_code=401, detail="Błędne dane logowania")
 
-    access_token = create_access_token(data={"sub": user.UserID})
+    access_token = create_access_token(data={"sub": str(user.UserID)})
     return {"access_token": access_token, "token_type": "bearer", "user": user.Nickname}
 
 
@@ -154,6 +166,25 @@ def get_my_history(
     results = db.query(Stats).filter(Stats.IDUser == current_user.UserID).all()
     return results
 
+@app.post("/api/save-stats")
+def save_workout_results(
+    stats_data: data.StatsCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    new_stat = Stats(
+        IDUser=current_user.UserID,
+        IDExercise=stats_data.IDExercise,
+        RepCount=stats_data.RepCount,
+        Weight=stats_data.Weight,
+        JumpHeight=stats_data.JumpHeight
+    )
+
+    db.add(new_stat)
+    db.commit()
+    db.refresh(new_stat)
+
+    return{"status": "success", "detail": "Wynik zapisany pomyślnie"}
 
 # --- ENDPOINTY KAMER (MediaPipe) ---
 @app.get("/api/video-stream/{exercise_id}")
@@ -167,15 +198,25 @@ def start_exercise(exercise_id: str):
     
 @app.post("/api/stop-exercise/{exercise_id}")
 def stop_exercise(exercise_id: int):
-    zdobyte_powtorzenia = 0
+    # Domyślne wartości
+    wynik_powtorzenia = 0
+    wynik_dodatkowy = 0.0 # Będzie to jumpHeight dla skoków
     
-    # Przypisujemy wyniki z funkcji zatrzymujących do zmiennej
     if exercise_id == 1:
-        zdobyte_powtorzenia = biceps.zatrzymaj_trening()
+        wynik_powtorzenia = biceps.zatrzymaj_trening()
+        
     elif exercise_id == 2:
-        zdobyte_powtorzenia = barki.zatrzymaj_trening()
+        wynik_powtorzenia = barki.zatrzymaj_trening()
+        
     elif exercise_id == 3:
-        zdobyte_powtorzenia = wyskok.zatrzymaj_trening()
+        # Teraz tutaj odbieramy słownik z wyskok.py
+        dane_wyskok = wyskok.zatrzymaj_trening() 
+        wynik_powtorzenia = dane_wyskok["powtorzenia"]
+        wynik_dodatkowy = dane_wyskok["jumpHeight"]
 
-    # Zwracamy jsona z policzonymi powtórzeniami, tak aby React mógł je odczytać
-    return {"status": "success", "powtorzenia": zdobyte_powtorzenia}
+    # Zwracamy spójny obiekt JSON, który łatwo odczytasz w React
+    return {
+        "status": "success", 
+        "powtorzenia": wynik_powtorzenia, 
+        "jumpHeight": wynik_dodatkowy
+    }

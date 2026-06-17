@@ -73,10 +73,14 @@ def setup_cameras():
     cap1 = cv2.VideoCapture(0)
     cap2 = cv2.VideoCapture(1)
 
+    if not cap1.isOpened():
+        print("BŁĄD: Nie można połączyć się z główną kamerą (indeks 0).")
+    else:
+        print("SUKCES: Główna kamera została wykryta.")
     ma_kamere2 = cap2.isOpened()
 
-    cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
-    cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+    cap1.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    cap1.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
     if ma_kamere2:
         cap2.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
@@ -86,13 +90,27 @@ def setup_cameras():
 
 
 def combine_and_draw_ui(img1, img2, ma_kamere2, counter, feedback):
-    if ma_kamere2:
-        combined_img = np.hstack((img1, img2))
+    if ma_kamere2 and img2 is not None:
+        # Pobieramy wymiary obu obrazów
+        h1, w1, _ = img1.shape
+        h2, w2, _ = img2.shape
+
+        # Jeśli wysokości są różne, skalujemy img2 do wysokości img1
+        if h1 != h2:
+            # Obliczamy nową szerokość, zachowując proporcje
+            nowa_szerokosc = int(w2 * (h1 / h2))
+            img2_gotowy = cv2.resize(img2, (nowa_szerokosc, h1))
+        else:
+            img2_gotowy = img2
+
+        # Sklejamy obrazy poziomo
+        combined_img = np.hstack((img1, img2_gotowy))
     else:
         combined_img = img1
 
     comb_h, comb_w, _ = combined_img.shape
 
+    # Rysowanie interfejsu
     cv2.rectangle(combined_img, (0, 0), (comb_w, 100), (0, 0, 0), -1)
     cv2.putText(combined_img, f"POWTORZENIA: {counter}", (25, 45), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3,
                 cv2.LINE_AA)

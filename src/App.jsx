@@ -1,7 +1,6 @@
 import {useEffect} from 'react'
 //Zdjecia
 import headerImg from './assets/headerIMG.png'
-import personIcon from './assets/personIcon.png'
 //Ikony do bottom-navbar
 import IkonaStronaGlowna from './icons/IkonaStronaGlowna';
 import IkonaStatystyki from './icons/IkonaStatystyki';
@@ -9,11 +8,17 @@ import IkonaPerson from './icons/IkonaPerson';
 //Formularze
 import FormularzRejestracji from './pages/FormularzRejestracji';
 import FormularzLogowania from './pages/FormularzLogowania';
+//Komponenty
+import MenuUzytownika from './components/MenuUzytkownika';
 //CSS
 import './App.css'
 //Podstrony
 import StronaGlowna from './pages/StronaGlowna';
+import StronaGlownaZalogowany from './pages/StronaGlownaZalogowany';
 import Cwiczenia from './pages/Cwiczenia';
+import StatystykiUzytkownika from './pages/StatystykiUzytkownika';
+import StatystykiUzytkownikaZalogowany from './pages/StatystykiUzytkownikaZalogowany';
+import ProfilZalogowany from './pages/ProfilZalogowany';
 
 function App() {
   //Pobiera aktualny adres strony do .active
@@ -25,15 +30,19 @@ function App() {
     }
   }, []);
 
+  const czyZalogowany = !!localStorage.getItem('token');
+
   let stronaDoWyswietlenia;
   if(aktualnyAdres==="/profil-rejestracja"){
-    stronaDoWyswietlenia=<FormularzRejestracji/>
+    stronaDoWyswietlenia= czyZalogowany ? <ProfilZalogowany /> : <FormularzRejestracji/>
   }else if(aktualnyAdres==="/profil-logowanie"){
-    stronaDoWyswietlenia=<FormularzLogowania/>
+    stronaDoWyswietlenia= czyZalogowany ? <ProfilZalogowany /> : <FormularzLogowania/>
   }else if(aktualnyAdres==="/strona-glowna"){
-    stronaDoWyswietlenia=<StronaGlowna/>
-  }else if(aktualnyAdres==="/cwiczenia-gosc"){
+    stronaDoWyswietlenia = czyZalogowany ? <StronaGlownaZalogowany /> : <StronaGlowna />;
+  }else if(aktualnyAdres==="/cwiczenia"){
     stronaDoWyswietlenia=<Cwiczenia/>
+  }else if(aktualnyAdres==="/statystyki"){
+    stronaDoWyswietlenia= czyZalogowany ? <StatystykiUzytkownikaZalogowany/> : <StatystykiUzytkownika />
   }
 
   return (
@@ -43,22 +52,7 @@ function App() {
           <img src={headerImg} className="base2" width="60" height="80" alt="logo stony"/>
           <p className="tekstHeader">WITRUALNY TRENER FITNESS</p>
         </div>
-        <div className='left-right-header'>
-          <img className='personIcon'src={personIcon}/>
-          ⌵
-          <ul className='profilehamburger'>
-            <li>
-              <a href='/profil-logowanie'>
-                Zaloguj się
-              </a>
-            </li>
-            <li>
-              <a href='/profil-rejestracja'>
-                Zarejestruj sie
-              </a>    
-            </li>
-          </ul>
-        </div>
+        <MenuUzytownika />
       </header>
 
       {stronaDoWyswietlenia}

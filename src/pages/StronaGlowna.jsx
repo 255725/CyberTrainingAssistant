@@ -24,7 +24,7 @@ function StronaGlowna (){
                             </a>
                         </button>
                         <button className='button-general-white'>
-                            <a href='cwiczenia-gosc'>
+                            <a href='cwiczenia'>
                                 Wypróbuj jako gość
                             </a>
                         </button>
@@ -66,4 +66,4 @@ function StronaGlowna (){
         </>
 
     )
-}export default StronaGlowna
+}export default StronaGlowna;

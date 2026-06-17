@@ -39,5 +39,5 @@ class Stats(Base):
     RepCount = Column(Integer)
     Weight = Column(Float)
     JumpHeight = Column(Float)
-    DataTreningu = Column(DateTime, default=datetime.datetime.now)
+    DateAdded = Column(DateTime, default=datetime.datetime.now)
     uzytkownik = relationship("User", back_populates="statystyki")

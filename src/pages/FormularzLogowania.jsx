@@ -31,9 +31,9 @@ function FormularzLogowania (){
             localStorage.setItem('token', data.access_token);
             localStorage.setItem('user_nickname', data.user);
 
-            alert('Zalogowano pomyślnie jako: ${data.user}');
+            alert(`Zalogowano pomyślnie jako: ${data.user}`);
 
-            window.location.href = '/cwiczenia';
+            window.location.href = '/strona-glowna';
         }catch(err){
             setError(err.message);
         }
