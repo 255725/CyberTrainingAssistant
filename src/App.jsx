@@ -17,6 +17,8 @@ import StronaGlowna from './pages/StronaGlowna';
 import StronaGlownaZalogowany from './pages/StronaGlownaZalogowany';
 import Cwiczenia from './pages/Cwiczenia';
 import StatystykiUzytkownika from './pages/StatystykiUzytkownika';
+import StatystykiUzytkownikaZalogowany from './pages/StatystykiUzytkownikaZalogowany';
+import ProfilZalogowany from './pages/ProfilZalogowany';
 
 function App() {
   //Pobiera aktualny adres strony do .active
@@ -32,15 +34,15 @@ function App() {
 
   let stronaDoWyswietlenia;
   if(aktualnyAdres==="/profil-rejestracja"){
-    stronaDoWyswietlenia=<FormularzRejestracji/>
+    stronaDoWyswietlenia= czyZalogowany ? <ProfilZalogowany /> : <FormularzRejestracji/>
   }else if(aktualnyAdres==="/profil-logowanie"){
-    stronaDoWyswietlenia=<FormularzLogowania/>
+    stronaDoWyswietlenia= czyZalogowany ? <ProfilZalogowany /> : <FormularzLogowania/>
   }else if(aktualnyAdres==="/strona-glowna"){
     stronaDoWyswietlenia = czyZalogowany ? <StronaGlownaZalogowany /> : <StronaGlowna />;
   }else if(aktualnyAdres==="/cwiczenia"){
     stronaDoWyswietlenia=<Cwiczenia/>
   }else if(aktualnyAdres==="/statystyki"){
-    stronaDoWyswietlenia=<StatystykiUzytkownika />
+    stronaDoWyswietlenia= czyZalogowany ? <StatystykiUzytkownikaZalogowany/> : <StatystykiUzytkownika />
   }
 
   return (

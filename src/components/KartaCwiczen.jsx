@@ -44,7 +44,7 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
             IDExercise: exerciseId,
             RepCount: repCount,
             Weight: parseInt(exerciseId) === 3 ? 0.0 : parseFloat(currentWeight) || 0.0,
-            JumpHeight: parseInt(exerciseId) === 3 ? jumpHeight : 0.0
+            JumpHeight: parseInt(exerciseId) === 3 ? parseFloat(jumpHeight) || 0.0 : 0.0
         };
 
         try {
@@ -93,13 +93,13 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
                 </div>
             )}
             {showWeightModel && (
-                <div className='modal-overlay'>
-                    <div className='weight-modal'>
+                <div className='modal-overlay' onClick={() => setShowWeightModel(false)}>
+                    <div className='weight-modal' onClick={(e) => e.stopPropagation()}>
                         <h3>Trening zakończony!</h3>
                         <p>Policzono: {repCount} powtórzeń</p>
 
                         {parseInt(exerciseId) === 3 ? (
-                            <p>Twój najwyższy skok: <b>{jumpHeight} cm</b></p>
+                            <p>Twój najwyższy skok: <b>{parseFloat(jumpHeight).toFixed(1)} cm</b></p>
                         ) : (
                             <input
                                 type="number"
@@ -111,6 +111,9 @@ function KartaCwiczen({icon, title, describe, exerciseId}){
 
                         <button className='button-general-blue' onClick={zapiszWynikDoBazy}>
                             Zapisz wynik
+                        </button>
+                        <button className='button-general-white' onClick={() => setShowWeightModel(false)}>
+                            Anuluj
                         </button>
                     </div>
                 </div>

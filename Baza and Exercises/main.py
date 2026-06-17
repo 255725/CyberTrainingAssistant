@@ -73,20 +73,32 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    print(f"\n--- DEBUG: Otrzymany token: {token[:20]}... ---")
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("sub")
-        if user_id is None:
+        # Używamy krotki ("HS256",)
+        payload = jwt.decode(token, SECRET_KEY, algorithms=("HS256",))
+        print(f"--- DEBUG: Zdekodowany payload: {payload} ---")
+        
+        user_id_str = payload.get("sub")
+        if user_id_str is None:
+            print("--- DEBUG: BŁĄD - Brak pola 'sub' w tokenie! ---")
             raise HTTPException(status_code=401, detail="Nieprawidłowy token")
+            
+        user_id = int(user_id_str)
+        
     except jwt.ExpiredSignatureError:
+        print("--- DEBUG: BŁĄD - Token wygasł! ---")
         raise HTTPException(status_code=401, detail="Sesja wygasła, zaloguj się ponownie")
-    except jwt.PyJWTError:
+    except jwt.PyJWTError as e:
+        print(f"--- DEBUG: BŁĄD DEKODOWANIA JWT: {e} ---")
         raise HTTPException(status_code=401, detail="Błąd autoryzacji tokena")
     
     user = db.query(User).filter(User.UserID == user_id).first()
     if user is None:
+        print(f"--- DEBUG: BŁĄD - Nie znaleziono w bazie użytkownika o ID {user_id} ---")
         raise HTTPException(status_code=404, detail="Użytkownik nie istnieje")
     
+    print(f"--- DEBUG: Autoryzacja udana! Użytkownik: {user.Nickname} ---")
     return user
 
 
@@ -116,7 +128,7 @@ def login(login_data: data.LoginRequest, db: Session = Depends(get_db)):
     if not user or not verify_password(login_data.Password, user.Password):
         raise HTTPException(status_code=401, detail="Błędne dane logowania")
 
-    access_token = create_access_token(data={"sub": user.UserID})
+    access_token = create_access_token(data={"sub": str(user.UserID)})
     return {"access_token": access_token, "token_type": "bearer", "user": user.Nickname}
 
 

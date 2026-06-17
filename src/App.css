@@ -18,6 +18,22 @@
   transition: all 0.3s ease;
 }
 
+.button-general-logout{
+  background-color: darkred;
+  color: whitesmoke;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 55px;
+}
+.button-general-logout:hover{
+  cursor: pointer;
+  background-color: whitesmoke;
+  border-color: darkred;
+  color: darkred;
+  transition: all 0.3s ease;
+}
+
 .button-general-white{
   background-color: whitesmoke;
   color: darkblue;
@@ -570,4 +586,382 @@ a{
   font-weight: 600;
   color: black;
   gap: 10px;
+}
+
+.stats-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 40px 20px 100px 20px;
+  background-color: transparent;
+  color: #000;
+}
+
+.stats-header {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000;
+}
+
+.chart-wrapper {
+  background-color: #fbfbfb;
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+  padding: 40px 30px 20px 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  width: 100%;
+}
+
+.custom-tooltip {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+
+.modal-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; 
+}
+
+.weight-modal {
+  background-color: #ffffff; 
+  padding: 40px;
+  border-radius: 20px;
+  color: #000;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.weight-modal input {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.weight-modal input:focus{
+  border-color: #000080;
+}
+
+.exercise-selection-container {
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+.exercise-selection-label {
+  margin-right: 15px;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.exercise-selection-dropdown {
+  padding: 12px 25px;
+  border-radius: 30px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.exercise-selection-dropdown:focus {
+  border-color: #000080;
+  box-shadow: 0 0 3px rgba(0, 0, 102, 0.1);
+}
+
+.exercise-selection-dropdown option {
+  background-color: #fff;
+  color: #000;
+}
+
+
+
+
+/* --- KALENDARZ CZĘSTOTLIWOŚCI TRENINGÓW --- */
+
+.calendar-wrapper {
+  background-color: #fbfbfb; 
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  color: #000;
+  margin-top: 30px;
+}
+
+.calendar-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.calendar-day-header {
+  color: #555;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Pojedynczy kafelek dnia */
+.calendar-day {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  color: #333;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e5e5;
+}
+
+.calendar-day.empty {
+  background-color: transparent;
+  border: none;
+}
+
+/* Dzień z odbytym treningiem - podświetlenie w stylu Cyber */
+.calendar-day.trained {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+  border: 1px solid #1e8e3e;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(30, 142, 62, 0.1);
+}
+
+/* Aktualny dzień (Dzisiaj) - zaznaczony fioletową ramką */
+.calendar-day.today {
+  border: 2px solid #000080;
+  color: #000080;
+  font-weight: bold;
+}
+
+/* Legenda pod kalendarzem */
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.legend-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.legend-box.empty {
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+}
+
+.legend-box.trained {
+  background-color: #e6f4ea;
+  border: 1px solid #1e8e3e;
+}
+
+
+
+
+/*PROFIL*/
+/* --- JASNY MOTYW PROFILU (zgodny ze stroną główną) --- */
+
+.profile-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 100px 20px;
+  color: #000; /* Ciemny tekst dla jasnego tła */
+}
+
+.profile-container .stats-header {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+/* Siatka układająca karty */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* Karty (stylizowane na te ze screena: szare obramowanie, jasne tło, zaokrąglenia) */
+.profile-card {
+  background-color: #fbfbfb; /* Bardzo jasny, czysty szary/biały */
+  border: 1px solid #e5e5e5; /* Delikatna ramka */
+  border-radius: 15px; /* Zaokrąglenie identyczne jak na str. głównej */
+  padding: 55px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); /* Ledwo widoczny, miękki cień */
+}
+
+.profile-card h3 {
+  margin-bottom: 25px;
+  color: #000;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* Awatar */
+.avatar-placeholder {
+  width: 85px;
+  height: 85px;
+  background-color: #f0f0f5;
+  color: #000066; /* Głęboki granat dopasowany do przycisku */
+  border: 2px solid #000066;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Status */
+.status-badge {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Pola tekstowe (Inputy) */
+.input-group {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #000;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #000066; /* Granatowe podświetlenie */
+  box-shadow: 0 0 0 3px rgba(0, 0, 102, 0.1);
+}
+
+/* Przyciski */
+.save-btn, .logout-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px; /* Zaokrąglony kształt pigułki ze screena */
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: auto;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+
+/* Przełączniki (Toggles) */
+.toggle-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 30px;
+}
+
+.toggle-group label {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.toggle-btn {
+  background-color: #e0e0e0;
+  color: #555;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background-color: #000080; /* Granatowy akcent */
+  color: white;
 }
