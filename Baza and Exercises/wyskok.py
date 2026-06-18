@@ -70,7 +70,7 @@ def generuj_obraz_wyskok():
                                 is_calibrated = True
                                 stage = "standing"
                                 feedback = "Skalibrowano! Mozesz skakac."
-                                feedback_glosowy = "Skalibrowano. Mozesz skakac."
+                                feedback_glosowy = "Skalibrowano."
                             else:
                                 feedback = "Blad! Odsun sie od kamery."
                                 feedback_glosowy = "Odsun sie od kamery"

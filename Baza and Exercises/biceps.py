@@ -44,7 +44,7 @@ def generuj_obraz_biceps():
                 if angle > 150:
                     if stage == "lowering":
                         feedback = "Dobry wyprost. Unos ciezar."
-                        feedback_glosowy = "Dobry wyprost"
+                        feedback_glosowy = ""
                     elif stage == "lifting":
                         feedback = "Ruch byl zbyt plytki!"
                         feedback_glosowy = "Popraw technike"

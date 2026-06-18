@@ -47,7 +47,7 @@ def generuj_obraz_barki():
                         feedback_glosowy = "Popraw technike"
                     elif stage == "lowering":
                         feedback = "Dobry opust. Unies rece w bok."
-                        feedback_glosowy = "Dobrze"
+                        feedback_glosowy = ""
                     stage = "down"
 
                 if angle > 40 and stage == "down":
